@@ -20,11 +20,9 @@ export default function BasicRulesLesson() {
   const [highlightedSquares, setHighlightedSquares] = useState<number[][]>([]);
   const [animationActive, setAnimationActive] = useState(false);
 
-  // Define different board states
   const boardStates = {
     setup: Array(BOARD_SIZE).fill(0).map((_, row) => {
       return Array(BOARD_SIZE).fill(0).map((_, col) => {
-        // Initial board setup
         if (row === 0) {
           if (col === 0 || col === 7) return { type: "rook", color: "black" };
           if (col === 1 || col === 6) return { type: "knight", color: "black" };
@@ -51,14 +49,11 @@ export default function BasicRulesLesson() {
     
     checkmate: Array(BOARD_SIZE).fill(0).map((_, row) => {
       return Array(BOARD_SIZE).fill(0).map((_, col) => {
-        // Classic back-rank mate position
-        // Black king is trapped on h8 with its own pawns on f7, g7, h7
-        // White rook on a8 delivers check along the back rank
         if (row === 0 && col === 7) return { type: "king", color: "black" };
         if (row === 1 && col === 5) return { type: "pawn", color: "black" };
         if (row === 1 && col === 6) return { type: "pawn", color: "black" };
         if (row === 1 && col === 7) return { type: "pawn", color: "black" };
-        if (row === 0 && col === 0) return { type: "rook", color: "white" }; // Rook delivering mate
+        if (row === 0 && col === 0) return { type: "rook", color: "white" };
         if (row === 7 && col === 4) return { type: "king", color: "white" };
         return null;
       });
@@ -66,7 +61,6 @@ export default function BasicRulesLesson() {
     
     movement: Array(BOARD_SIZE).fill(0).map((_, row) => {
       return Array(BOARD_SIZE).fill(0).map((_, col) => {
-        // Simple position showing a few pieces
         if (row === 3 && col === 3) return { type: "queen", color: "white" };
         if (row === 2 && col === 5) return { type: "knight", color: "white" };
         if (row === 7 && col === 0) return { type: "king", color: "black" };
@@ -76,19 +70,15 @@ export default function BasicRulesLesson() {
     })
   };
 
-  // Update highlights when tab changes or component mounts
   useEffect(() => {
     updateHighlightsForTab(activeTab);
   }, [activeTab]);
 
-  // Function to update highlights based on the selected tab
   const updateHighlightsForTab = (tab: string) => {
     if (tab === "movement") {
-      // No highlights for movement tab - leave empty
       setHighlightedSquares([]);
     } 
     else if (tab === "checkmate") {
-      // Only highlight the back rank (row 0) from b8 to h8 (cols 1-7)
       const mateHighlights: number[][] = [];
       for (let c = 1; c < 8; c++) {
         mateHighlights.push([0, c]);
@@ -96,37 +86,28 @@ export default function BasicRulesLesson() {
       setHighlightedSquares(mateHighlights);
     } 
     else {
-      // For setup tab or any other tab, clear highlights
       setHighlightedSquares([]);
     }
   };
 
-  // Handle tab changes
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
     setAnimationActive(true);
-
-    // Reset highlights immediately when changing tabs
     setHighlightedSquares([]);
-
-    // Set appropriate highlights after a short delay for animation
     setTimeout(() => {
       updateHighlightsForTab(tab);
       setTimeout(() => setAnimationActive(false), 300);
     }, 100);
   };
 
-  // Check if a square is highlighted
   const isHighlightedSquare = (row: number, col: number) => {
     return highlightedSquares.some(([r, c]) => r === row && c === col);
   };
 
-  // Get square color based on position
   const getSquareColor = (row: number, col: number) => {
     return (row + col) % 2 === 0 ? "bg-gray-200" : "bg-blue-600";
   };
 
-  // Get piece image path
   const pieceImagePath = (piece: ChessPiece) => {
     const colorPrefix = piece.color === "white" ? "w" : "b";
     let pieceCode: string;
@@ -176,7 +157,6 @@ export default function BasicRulesLesson() {
               This is how the chess pieces are arranged at the start of a game. White pieces are at the bottom rows (1-2), and black pieces are at the top rows (7-8).
             </p>
             
-            {/* Chess Board */}
             <div className="w-full aspect-square max-w-lg mx-auto mb-8 border-2 border-gray-800">
               {Array(BOARD_SIZE).fill(0).map((_, row) => (
                 <div key={row} className="flex w-full" style={{ height: `${100 / BOARD_SIZE}%` }}>
@@ -198,7 +178,8 @@ export default function BasicRulesLesson() {
                             <img 
                               src={pieceImagePath(piece)} 
                               alt={`${piece.color} ${piece.type}`} 
-                              className="w-full h-full" 
+                              className="w-full h-full drop-shadow-md" 
+                              style={{ filter: 'drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.2))' }}
                             />
                           </motion.div>
                         )}
@@ -229,7 +210,6 @@ export default function BasicRulesLesson() {
               Each chess piece moves in a unique way. Here are examples of common piece positions during a game.
             </p>
             
-            {/* Chess Board */}
             <div className="w-full aspect-square max-w-lg mx-auto mb-8 border-2 border-gray-800">
               {Array(BOARD_SIZE).fill(0).map((_, row) => (
                 <div key={row} className="flex w-full" style={{ height: `${100 / BOARD_SIZE}%` }}>
@@ -239,7 +219,7 @@ export default function BasicRulesLesson() {
                     return (
                       <div 
                         key={col} 
-                        className={`${getSquareColor(row, col)} flex items-center justify-center cursor-pointer relative`}
+                        className={`${getSquareColor(row, col)} flex items-center justify-center relative`}
                         style={{ width: `${100 / BOARD_SIZE}%` }}
                       >
                         {piece && (
@@ -251,7 +231,8 @@ export default function BasicRulesLesson() {
                             <img 
                               src={pieceImagePath(piece)} 
                               alt={`${piece.color} ${piece.type}`} 
-                              className="w-full h-full" 
+                              className="w-full h-full drop-shadow-md" 
+                              style={{ filter: 'drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.2))' }}
                             />
                           </motion.div>
                         )}
@@ -283,7 +264,6 @@ export default function BasicRulesLesson() {
               attacking the black king. The black pawns prevent the king from escaping.
             </p>
             
-            {/* Chess Board */}
             <div className="w-full aspect-square max-w-lg mx-auto mb-8 border-2 border-gray-800">
               {Array(BOARD_SIZE).fill(0).map((_, row) => (
                 <div key={row} className="flex w-full" style={{ height: `${100 / BOARD_SIZE}%` }}>
@@ -296,7 +276,6 @@ export default function BasicRulesLesson() {
                         className={`${getSquareColor(row, col)} flex items-center justify-center relative`}
                         style={{ width: `${100 / BOARD_SIZE}%` }}
                       >
-                        {/* Only show highlights for the back rank (row 0) */}
                         {isHighlightedSquare(row, col) && (
                           <div className="absolute w-full h-full bg-red-500 opacity-20 z-0" />
                         )}
@@ -314,7 +293,8 @@ export default function BasicRulesLesson() {
                             <img 
                               src={pieceImagePath(piece)} 
                               alt={`${piece.color} ${piece.type}`} 
-                              className="w-full h-full" 
+                              className="w-full h-full drop-shadow-md" 
+                              style={{ filter: 'drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.2))' }}
                             />
                           </motion.div>
                         )}
