@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ChevronRight, BookOpen, GraduationCap, Lightbulb } from "lucide-react"
+import { ChevronRight, BookOpen, GraduationCap, Lightbulb, KeyRound, ZapFast } from "lucide-react"
 import Link from "next/link"
 
 export default function LearnPage() {
@@ -26,33 +26,43 @@ export default function LearnPage() {
     show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   }
 
-  // Define lesson data for each level
-  const beginner = [
-    { id: "chess-pieces", title: "Chess Pieces", description: "Learn how each piece moves on the board", path: "/learn/chess-pieces" },
-    { id: "basic-rules", title: "Basic Rules", description: "Understanding the fundamental rules of chess", path: "/learn/basic-rules" },
-    { id: "check-checkmate", title: "Check & Checkmate", description: "How to attack the king and win the game", path: "/learn/check-checkmate" },
-    { id: "special-moves", title: "Special Moves", description: "Castling, en passant, and pawn promotion", path: "/learn/special-moves" },
-    { id: "board-setup", title: "Board Setup", description: "How to correctly set up the chess board", path: "/learn/board-setup" },
-    { id: "basic-tactics", title: "Basic Tactics", description: "Simple tactical patterns for beginners", path: "/learn/basic-tactics" },
-  ]
-
-  const intermediate = [
-    { id: "opening-principles", title: "Opening Principles", description: "Key concepts for starting the game well", path: "/learn/opening-principles" },
-    { id: "tactical-patterns", title: "Tactical Patterns", description: "Common tactical motifs and combinations", path: "/learn/tactical-patterns" },
-    { id: "positional-play", title: "Positional Play", description: "Understanding pawn structure and piece placement", path: "/learn/positional-play" },
-    { id: "endgame-basics", title: "Endgame Basics", description: "Essential endgame techniques and principles", path: "/learn/endgame-basics" },
-    { id: "planning", title: "Planning", description: "How to create and execute plans in chess", path: "/learn/planning" },
-    { id: "common-mistakes", title: "Common Mistakes", description: "Avoiding typical intermediate-level errors", path: "/learn/common-mistakes" },
-  ]
-
-  const advanced = [
-    { id: "advanced-openings", title: "Advanced Openings", description: "Deep dive into opening theory and variations", path: "/learn/advanced-openings" },
-    { id: "calculation", title: "Calculation", description: "How to analyze positions and calculate variations", path: "/learn/calculation" },
-    { id: "strategic-concepts", title: "Strategic Concepts", description: "Complex positional and strategic ideas", path: "/learn/strategic-concepts" },
-    { id: "endgame-theory", title: "Endgame Theory", description: "Complex endgame positions and techniques", path: "/learn/endgame-theory" },
-    { id: "attack-defense", title: "Attack & Defense", description: "Advanced attacking and defensive techniques", path: "/learn/attack-defense" },
-    { id: "study-analysis", title: "Study & Analysis", description: "How to analyze your games and improve", path: "/learn/study-analysis" },
-  ]
+  const lessonsByLevel = {
+    beginner: [
+      { id: "chess-pieces", title: "Chess Pieces", description: "Learn how each piece moves on the board", path: "/learn/chess-pieces" },
+      { id: "basic-rules", title: "Basic Rules", description: "Understanding the fundamental rules of chess", path: "/learn/basic-rules" },
+      { id: "check-checkmate", title: "Check & Checkmate", description: "How to attack the king and win the game", path: "/learn/check-checkmate" },
+      { id: "special-moves", title: "Special Moves", description: "Castling, en passant, and pawn promotion", path: "/learn/special-moves" },
+      { id: "basic-tactics", title: "Basic Tactics", description: "Simple tactical patterns for beginners", path: "/learn/basic-tactics" },
+    ],
+    intermediate: [
+      { id: "opening-principles", title: "Opening Principles", description: "Key concepts for starting the game well", path: "/learn/opening-principles" },
+      { id: "tactical-patterns", title: "Tactical Patterns", description: "Common tactical motifs and combinations", path: "/learn/tactical-patterns" },
+      { id: "positional-play", title: "Positional Play", description: "Understanding pawn structure and piece placement", path: "/learn/positional-play" },
+      { id: "endgame-basics", title: "Endgame Basics", description: "Essential endgame techniques and principles", path: "/learn/endgame-basics" },
+      { id: "planning", title: "Planning", description: "How to create and execute plans in chess", path: "/learn/planning" },
+      { id: "common-mistakes", title: "Common Mistakes", description: "Avoiding typical intermediate-level errors", path: "/learn/common-mistakes" },
+      {
+        title: "Special Moves",
+        description: "Master castling, en passant, and pawn promotion.",
+        href: "/learn/special-moves",
+        icon: <KeyRound className="h-6 w-6" />,
+      },
+      {
+        title: "Basic Tactics",
+        description: "Learn essential chess tactics like pins, forks, skewers and more.",
+        href: "/learn/basic-tactics",
+        icon: <ZapFast className="h-6 w-6" />,
+      },
+    ],
+    advanced: [
+      { id: "advanced-openings", title: "Advanced Openings", description: "Deep dive into opening theory and variations", path: "/learn/advanced-openings" },
+      { id: "calculation", title: "Calculation", description: "How to analyze positions and calculate variations", path: "/learn/calculation" },
+      { id: "strategic-concepts", title: "Strategic Concepts", description: "Complex positional and strategic ideas", path: "/learn/strategic-concepts" },
+      { id: "endgame-theory", title: "Endgame Theory", description: "Complex endgame positions and techniques", path: "/learn/endgame-theory" },
+      { id: "attack-defense", title: "Attack & Defense", description: "Advanced attacking and defensive techniques", path: "/learn/attack-defense" },
+      { id: "study-analysis", title: "Study & Analysis", description: "How to analyze your games and improve", path: "/learn/study-analysis" },
+    ],
+  }
 
   return (
     <div className="container py-12 space-y-12">
@@ -93,7 +103,7 @@ export default function LearnPage() {
             animate="show"
             className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
           >
-            {beginner.map((lesson, index) => (
+            {lessonsByLevel.beginner.map((lesson, index) => (
               <motion.div key={lesson.id} variants={item}>
                 <Card className="h-full transition-all hover:shadow-md">
                   <CardHeader>
@@ -121,7 +131,7 @@ export default function LearnPage() {
             animate="show"
             className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
           >
-            {intermediate.map((lesson, index) => (
+            {lessonsByLevel.intermediate.map((lesson, index) => (
               <motion.div key={lesson.id} variants={item}>
                 <Card className="h-full transition-all hover:shadow-md">
                   <CardHeader>
@@ -149,7 +159,7 @@ export default function LearnPage() {
             animate="show"
             className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
           >
-            {advanced.map((lesson, index) => (
+            {lessonsByLevel.advanced.map((lesson, index) => (
               <motion.div key={lesson.id} variants={item}>
                 <Card className="h-full transition-all hover:shadow-md">
                   <CardHeader>
