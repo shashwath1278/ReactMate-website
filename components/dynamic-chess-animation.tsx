@@ -175,7 +175,7 @@ export default function DynamicChessAnimation() {
 
     const piecesTimer = setTimeout(() => {
       setShowPieces(true)
-    }, 1500)
+    }, 2500)
 
     return () => {
       clearTimeout(boardTimer)
@@ -390,7 +390,7 @@ export default function DynamicChessAnimation() {
             finalY={particle.finalY || particle.y + Math.random() * 20 - 10}
             size={particle.size || 4}
             delay={particle.delay || 0}
-            duration={particle.duration || 0.8}
+            duration={particle.duration || 0.2}
           />
         ))}
       </AnimatePresence>

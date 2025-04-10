@@ -2,6 +2,8 @@
 
 ReactMate is a modern chess platform built with React, designed for developers and chess enthusiasts alike. This web application provides a beautiful and feature-rich interface for playing chess in various modes, learning chess concepts, and improving your skills.
 
+![ReactMate Chess](public/screenshot.png)
+
 ## Features
 
 - **Multiple Game Modes**: Play against AI, play locally with a friend, or challenge players online
@@ -44,7 +46,7 @@ Challenge players from around the world:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/shashwath1278/ReactMate.git
+git clone https://github.com/yourusername/ReactMate.git
 cd ReactMate
 ```
 

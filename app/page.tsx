@@ -21,7 +21,7 @@ export default function Home() {
 
   const item = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    show: { opacity: 1, y: 0, transition: { duration: 1 } },
   }
 
   return (
@@ -157,66 +157,6 @@ export default function Home() {
 
       {/* Game Features Section */}
       <GameFeatures />
-
-      {/* Interactive Game Section */}
-      <section className="py-20">
-        <div className="container">
-          <motion.div
-            className="text-center max-w-3xl mx-auto mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Try ReactMate Now</h2>
-            <p className="text-xl text-muted-foreground">
-              Experience the full-featured chess application right in your browser
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="max-w-4xl mx-auto bg-card rounded-xl shadow-lg overflow-hidden"
-          >
-            <div className="aspect-video bg-muted relative">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Button size="lg" asChild>
-                  <Link href="/play">
-                    Play Now
-                    <ChevronRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-              <img
-                src="/placeholder.svg?height=600&width=1200"
-                alt="ReactMate Chess Application"
-                className="w-full h-full object-cover opacity-50"
-              />
-            </div>
-            <div className="p-6">
-              <div className="flex flex-wrap gap-4 justify-center">
-                <Button variant="outline" size="sm">
-                  Challenge AI
-                </Button>
-                <Button variant="outline" size="sm">
-                  Play with Friend
-                </Button>
-                <Button variant="outline" size="sm">
-                  Practice Mode
-                </Button>
-                <Button variant="outline" size="sm">
-                  Analyze Game
-                </Button>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Player Resources */}
       <section className="py-20 bg-muted/50">
         <div className="container">
           <motion.div
@@ -230,7 +170,7 @@ export default function Home() {
             <p className="text-xl text-muted-foreground">Improve your chess skills with our comprehensive guides</p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -279,19 +219,6 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <Card className="h-full">
-                <CardHeader>
-                  <CardTitle>Keyboard Shortcuts</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base">
-                    Master the keyboard shortcuts to navigate and control the chess application efficiently.
-                  </CardDescription>
-                  <Button variant="outline" className="w-full mt-4" asChild>
-                    <Link href="/learn">View Shortcuts</Link>
-                  </Button>
-                </CardContent>
-              </Card>
             </motion.div>
           </div>
         </div>
