@@ -1,8 +1,7 @@
 # ReactMate Chess
 
 <div align="center">
-  <img src="public/logo.svg" alt="ReactMate Chess Logo" width="120" />
-  <h3>Interactive Chess Learning Platform</h3>
+  <h3>Interactive Chess Learning and Playing Platform</h3>
   
   ![Next.js](https://img.shields.io/badge/Next.js-13+-000000?style=for-the-badge&logo=next.js)
   ![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react)
@@ -26,8 +25,8 @@ ReactMate Chess is an interactive web platform designed to help chess enthusiast
 ## 📷 Screenshots
 
 <div align="center">
-  <img src="public/screenshots/homepage.png" alt="Homepage" width="45%" />
-  <img src="public/screenshots/lesson.png" alt="Chess Lesson" width="45%" />
+  <img src="public/screenshot(733).png" alt="Homepage" width="45%" />
+  <img src="public/screenshot.png" alt="Chess Lesson" width="45%" />
 </div>
 
 ## 🛠️ Installation
