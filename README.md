@@ -25,7 +25,7 @@ ReactMate Chess is an interactive web platform designed to help chess enthusiast
 ## 📷 Screenshots
 
 <div align="center">
-  <img src="public/Screenshot(733).png" alt="Homepage" width="45%" />
+  <img src="public/Screenshot (733).png" alt="Homepage" width="45%" />
   <img src="public/Sscreenshot.png" alt="Chess Lesson" width="45%" />
 </div>
 
