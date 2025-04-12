@@ -114,5 +114,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ---
 
 <div align="center">
-  Made with ♟️ by ReactMate Team
+  Made with ♟️ by Shashwath
 </div>
