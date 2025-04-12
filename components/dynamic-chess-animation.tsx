@@ -74,7 +74,7 @@ const Square = ({ x, y, color, size }) => {
       animate={{ opacity: 1, scale: 1 }}
       transition={{
         duration: 0.5,
-        delay: (x + y) * 0.01,
+        delay: (x + y) * 0.007,
       }}
     />
   )

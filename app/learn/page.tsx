@@ -42,15 +42,17 @@ export default function LearnPage() {
       { id: "planning", title: "Planning", description: "How to create and execute plans in chess", path: "/learn/planning" },
       { id: "common-mistakes", title: "Common Mistakes", description: "Avoiding typical intermediate-level errors", path: "/learn/common-mistakes" },
       {
+        id: "special-moves-2",
         title: "Special Moves",
         description: "Master castling, en passant, and pawn promotion.",
-        href: "/learn/special-moves",
+        path: "/learn/special-moves",
         icon: <KeyRound className="h-6 w-6" />,
       },
       {
+        id: "basic-tactics-2",
         title: "Basic Tactics",
         description: "Learn essential chess tactics like pins, forks, skewers and more.",
-        href: "/learn/basic-tactics",
+        path: "/learn/basic-tactics",
         icon: <ZapFast className="h-6 w-6" />,
       },
     ],
@@ -112,7 +114,7 @@ export default function LearnPage() {
                   <CardContent className="space-y-4">
                     <CardDescription className="text-base">{lesson.description}</CardDescription>
                     <Button variant="outline" size="sm" className="w-full" asChild>
-                      <Link href={lesson.path}>
+                      <Link href={lesson.path || ""}>
                         Start Lesson
                         <ChevronRight className="ml-2 h-4 w-4" />
                       </Link>
