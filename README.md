@@ -1,111 +1,97 @@
 # ReactMate Chess
 
-ReactMate is a modern chess platform built with React, designed for developers and chess enthusiasts alike. This web application provides a beautiful and feature-rich interface for playing chess in various modes, learning chess concepts, and improving your skills.
+<div align="center">
+  <img src="public/logo.svg" alt="ReactMate Chess Logo" width="120" />
+  <h3>Interactive Chess Learning Platform</h3>
+  
+  ![Next.js](https://img.shields.io/badge/Next.js-13+-000000?style=for-the-badge&logo=next.js)
+  ![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react)
+  ![TailwindCSS](https://img.shields.io/badge/Tailwind-3-38B2AC?style=for-the-badge&logo=tailwind-css)
+  ![TypeScript](https://img.shields.io/badge/TypeScript-4-3178C6?style=for-the-badge&logo=typescript)
+</div>
 
-![ReactMate Chess](public/screenshot.png)
+## 🚀 Overview
 
-## Features
+ReactMate Chess is an interactive web platform designed to help chess enthusiasts of all levels improve their game through animated lessons, interactive examples, and structured learning paths. From basic piece movement to advanced tactical patterns, ReactMate provides an engaging environment to master the game of chess.
 
-- **Multiple Game Modes**: Play against AI, play locally with a friend, or challenge players online
-- **Beautiful UI**: Clean, responsive design with animations and transitions
-- **Dark/Light Mode**: Toggle between themes for comfortable viewing
-- **Learning Resources**: Comprehensive chess learning materials for all skill levels
-- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
+## ✨ Features
 
-## Game Modes
+- **Interactive Chess Board** - Dynamic, responsive chess board with animated pieces
+- **Structured Learning Paths** - Progress from beginner to advanced with organized lessons
+- **Tactical Pattern Recognition** - Learn essential chess tactics like pins, forks, skewers, and more
+- **Piece Movement Tutorials** - Interactive examples of how chess pieces move and capture
+- **Animated Demonstrations** - Visual animations for better conceptual understanding
+- **Mobile-Friendly Design** - Learn chess on any device with responsive UI
 
-### AI Mode
-Challenge our sophisticated chess engine at various difficulty levels:
-- Multiple difficulty settings
-- Instant play with no waiting
-- Move evaluation and analysis
-- Perfect for practice and learning
+## 📷 Screenshots
 
-### Local Mode
-Play chess with a friend on the same device:
-- No account required
-- Pass-and-play format
-- Auto-flip board option
-- Great for teaching chess
+<div align="center">
+  <img src="public/screenshots/homepage.png" alt="Homepage" width="45%" />
+  <img src="public/screenshots/lesson.png" alt="Chess Lesson" width="45%" />
+</div>
 
-### Online Mode
-Challenge players from around the world:
-- Quick matchmaking
-- Live chess ratings
-- Chat with opponents
-- Save and share games
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 16.x or higher
-- npm or yarn
-
-### Installation
+## 🛠️ Installation
 
 1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/ReactMate.git
-cd ReactMate
-```
+   ```
+   git clone https://github.com/shashwath1278/ReactMate.git
+   cd ReactMate
+   ```
 
 2. Install dependencies:
-```bash
-npm install
-# or
-yarn install
-```
+   ```
+   npm install
+   ```
 
-3. Start the development server:
-```bash
-npm run dev
-# or
-yarn dev
-```
+3. Run the development server:
+   ```
+   npm run dev
+   ```
 
-4. Open [http://localhost:3000](http://localhost:3000) to view the application in your browser.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Project Structure
+## 🧩 Project Structure
 
 ```
-ReactMate/
-├── app/                  # Next.js app directory
-│   ├── about/            # About page
-│   ├── contact/          # Contact page
-│   ├── learn/            # Chess learning resources
-│   ├── play/             # Game mode selection
-│   └── page.tsx          # Home page
-├── components/           # Reusable UI components
-│   ├── ui/               # Shadcn UI components
-│   ├── game-features.tsx # Chess game feature components
-│   └── navbar.tsx        # Navigation component
-├── lib/                  # Utility functions
-├── public/               # Static assets
-└── styles/               # Global styles
+ReactMate(website)/
+├── app/                # Next.js app router pages
+│   ├── learn/          # Learning section pages  
+│   ├── play/           # Interactive gameplay
+│   └── layout.tsx      # Main application layout
+├── components/         # Reusable UI components
+│   ├── learn/          # Learning-specific components
+│   └── ui/             # Shadcn UI components
+├── public/             # Static assets
+└── styles/             # Global styles
 ```
 
-## Technologies Used
+## 💻 Technologies
 
-- **Next.js**: React framework for production
-- **TypeScript**: Type-safe JavaScript
-- **Tailwind CSS**: Utility-first CSS framework
-- **Framer Motion**: Animation library
-- **Shadcn UI**: UI component library
-- **Chess.js**: Chess logic
-- **Stockfish**: Chess engine (for AI)
+- **Framework**: [Next.js](https://nextjs.org/)
+- **UI Library**: [React](https://reactjs.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) with [Shadcn UI](https://ui.shadcn.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
 
-## Deployment
+## 🌐 Key Components
 
-The application is deployed on Vercel:
+### Dynamic Chess Animation
 
-- **Main Website**: [https://react-mate.vercel.app](https://react-mate.vercel.app)
-- **Game Modes**:
-  - AI Mode: [https://react-mate--two.vercel.app/play/ai](https://react-mate--two.vercel.app/play/ai)
-  - Local Mode: [https://react-mate--two.vercel.app/play/offline](https://react-mate--two.vercel.app/play/offline)
-  - Online Mode: [https://react-mate--two.vercel.app/play/online](https://react-mate--two.vercel.app/play/online)
+Interactive chess board with animated piece movements, highlighting, and effects:
 
-## Contributing
+```jsx
+<DynamicChessAnimation />
+```
+
+### Chess Tactics Lessons
+
+Learn essential chess tactics with interactive examples:
+
+```jsx
+<BasicTacticsLesson />
+```
+
+## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
@@ -115,12 +101,18 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
+## 📜 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Acknowledgements
+## 🙏 Acknowledgments
 
-- Chess pieces designed by [Colin M.L. Burnett](https://en.wikipedia.org/wiki/User:Cburnett)
-- Stockfish chess engine
-- All the amazing contributors to open-source chess libraries
+- Chess.com for piece images
+- [Shadcn UI](https://ui.shadcn.com/) for component library
+- All open source contributors
+
+---
+
+<div align="center">
+  Made with ♟️ by ReactMate Team
+</div>
