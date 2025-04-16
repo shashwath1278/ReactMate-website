@@ -41,20 +41,7 @@ export default function LearnPage() {
       { id: "endgame-basics", title: "Endgame Basics", description: "Essential endgame techniques and principles", path: "/learn/endgame-basics" },
       { id: "planning", title: "Planning", description: "How to create and execute plans in chess", path: "/learn/planning" },
       { id: "common-mistakes", title: "Common Mistakes", description: "Avoiding typical intermediate-level errors", path: "/learn/common-mistakes" },
-      {
-        id: "special-moves-2",
-        title: "Special Moves",
-        description: "Master castling, en passant, and pawn promotion.",
-        path: "/learn/special-moves",
-        icon: <KeyRound className="h-6 w-6" />,
-      },
-      {
-        id: "basic-tactics-2",
-        title: "Basic Tactics",
-        description: "Learn essential chess tactics like pins, forks, skewers and more.",
-        path: "/learn/basic-tactics",
-        icon: <ZapFast className="h-6 w-6" />,
-      },
+
     ],
     advanced: [
       { id: "advanced-openings", title: "Advanced Openings", description: "Deep dive into opening theory and variations", path: "/learn/advanced-openings" },
