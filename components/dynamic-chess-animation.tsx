@@ -15,6 +15,101 @@ const piecePaths = {
   king: "M12 2c-.55 0-1 .45-1 1v2H9c-.55 0-1 .45-1 1s.45 1 1 1h2v2c0 .55.45 1 1 1s1-.45 1-1V7h2c.55 0 1-.45 1-1s-.45-1-1-1h-2V3c0-.55-.45-1-1-1zm-7 6c-1.1 0-2 .9-2 2v3c0 1.1.9 2 2 2h1v5c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2v-5h1c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2h-1c0 1.66-1.34 3-3 3h-6c-1.66 0-3-1.34-3-3H5zm2 5h10v5c0 .55-.45 1-1 1H8c-.55 0-1-.45-1-1v-5z",
 }
 
+// Type definitions
+type PieceType = "pawn" | "knight" | "bishop" | "rook" | "queen" | "king";
+
+interface ChessPieceProps {
+  type: PieceType;
+  color: string;
+  x: number;
+  y: number;
+  scale?: number;
+  rotate?: number;
+  moveToX?: number | null;
+  moveToY?: number | null;
+  onMoveComplete?: (() => void) | null;
+}
+
+interface SquareProps {
+  x: number;
+  y: number;
+  color: "light" | "dark";
+  size: number;
+}
+
+interface ParticleProps {
+  initialX: number;
+  initialY: number;
+  finalX: number;
+  finalY: number;
+  size: number;
+  delay: number;
+  duration: number;
+}
+
+interface MoveHighlightProps {
+  x: number;
+  y: number;
+  size: number;
+}
+
+interface ParticleState {
+  id: number;
+  initialX?: number;
+  initialY?: number;
+  finalX?: number;
+  finalY?: number;
+  size?: number;
+  delay?: number;
+  duration?: number;
+  x?: number;
+  y?: number;
+}
+
+interface SquareState {
+  id: string;
+  x: number;
+  y: number;
+  color: "light" | "dark";
+}
+
+interface PieceState {
+  id: number;
+  type: PieceType;
+  color: string;
+  x: number;
+  y: number;
+  scale: number;
+}
+
+interface MoveState {
+  from: {
+    piece: PieceType;
+    index: number;
+    x: number;
+    y: number;
+  };
+  to: {
+    x: number;
+    y: number;
+  };
+}
+
+interface HighlightState {
+  id: number;
+  x: number;
+  y: number;
+}
+
+interface ActivePieceState {
+  piece: PieceType;
+  index: number;
+  x: number;
+  y: number;
+  targetX: number;
+  targetY: number;
+}
+
 // Chess piece component with animation
 const ChessPiece = ({
   type,
@@ -26,7 +121,7 @@ const ChessPiece = ({
   moveToX = null,
   moveToY = null,
   onMoveComplete = null,
-}) => {
+}: ChessPieceProps) => {
   const initialState = { opacity: 0, scale: 0 }
   const animateState = {
     opacity: 1,
@@ -60,7 +155,7 @@ const ChessPiece = ({
 }
 
 // Chess board square
-const Square = ({ x, y, color, size }) => {
+const Square = ({ x, y, color, size }: SquareProps) => {
   return (
     <motion.div
       className={`absolute ${color === "light" ? "bg-amber-100" : "bg-amber-800"}`}
@@ -74,14 +169,14 @@ const Square = ({ x, y, color, size }) => {
       animate={{ opacity: 1, scale: 1 }}
       transition={{
         duration: 0.5,
-        delay: (x + y) * 0.007,
+        delay: (x + y) * 0.006,
       }}
     />
   )
 }
 
 // Particle effect
-const Particle = ({ initialX, initialY, finalX, finalY, size, delay, duration }) => {
+const Particle = ({ initialX, initialY, finalX, finalY, size, delay, duration }: ParticleProps) => {
   return (
     <motion.div
       className="absolute rounded-full bg-primary"
@@ -103,7 +198,7 @@ const Particle = ({ initialX, initialY, finalX, finalY, size, delay, duration })
 }
 
 // Move highlight
-const MoveHighlight = ({ x, y, size }) => {
+const MoveHighlight = ({ x, y, size }: MoveHighlightProps) => {
   return (
     <motion.div
       className="absolute rounded-full bg-primary/30"
@@ -121,15 +216,27 @@ const MoveHighlight = ({ x, y, size }) => {
   )
 }
 
-export default function DynamicChessAnimation() {
-  const [particles, setParticles] = useState([])
-  const [showBoard, setShowBoard] = useState(false)
-  const [showPieces, setShowPieces] = useState(false)
-  const [activePiece, setActivePiece] = useState(null)
-  const [moveHighlights, setMoveHighlights] = useState([])
-  const [moveSequence, setMoveSequence] = useState([])
-  const [currentMoveIndex, setCurrentMoveIndex] = useState(0)
-  const animationRef = useRef(null)
+interface DynamicChessAnimationProps {
+  customPosition?: {
+    pieces: PieceState[];
+    moves: {
+      piece: PieceType;
+      from: { x: number; y: number };
+      to: { x: number; y: number };
+    }[];
+  } | null;
+}
+
+export default function DynamicChessAnimation({ customPosition = null }: DynamicChessAnimationProps) {
+  const [particles, setParticles] = useState<ParticleState[]>([])
+  const [showBoard, setShowBoard] = useState<boolean>(false)
+  const [showPieces, setShowPieces] = useState<boolean>(false)
+  const [activePiece, setActivePiece] = useState<ActivePieceState | null>(null)
+  const [moveHighlights, setMoveHighlights] = useState<HighlightState[]>([])
+  const [moveSequence, setMoveSequence] = useState<MoveState[]>([])
+  const [currentMoveIndex, setCurrentMoveIndex] = useState<number>(0)
+  const [movedPieces, setMovedPieces] = useState<Map<number, { x: number, y: number }>>(new Map())
+  const animationRef = useRef<number | null>(null)
 
   // Board dimensions
   const boardSize = 320
@@ -139,7 +246,7 @@ export default function DynamicChessAnimation() {
   useEffect(() => {
     const interval = setInterval(() => {
       if (particles.length < 15) {
-        const newParticle = {
+        const newParticle: ParticleState = {
           id: Math.random(),
           initialX: Math.random() * boardSize,
           initialY: Math.random() * boardSize,
@@ -186,8 +293,25 @@ export default function DynamicChessAnimation() {
   // Define move sequence for animation
   useEffect(() => {
     if (showPieces) {
-      // Define a sequence of moves to demonstrate gameplay
-      const moves = [
+      // Use custom position if provided
+      if (customPosition) {
+        const moves: MoveState[] = customPosition.moves.map(move => ({
+          from: {
+            piece: move.piece,
+            index: customPosition.pieces.findIndex(p => 
+              p.type === move.piece && p.x === move.from.x && p.y === move.from.y) || 0,
+            x: move.from.x,
+            y: move.from.y
+          },
+          to: { x: move.to.x, y: move.to.y }
+        }));
+        
+        setMoveSequence(moves);
+        return;
+      }
+      
+      // Default sequence of moves to demonstrate gameplay
+      const moves: MoveState[] = [
         {
           from: { piece: "pawn", index: 12, x: squareSize * 3, y: squareSize },
           to: { x: squareSize * 3, y: squareSize * 3 },
@@ -201,12 +325,12 @@ export default function DynamicChessAnimation() {
           from: { piece: "pawn", index: 29, x: squareSize * 4, y: squareSize * 6 },
           to: { x: squareSize * 4, y: squareSize * 4 },
         },
-        { from: { piece: "bishop", index: 3, x: squareSize * 2, y: 0 }, to: { x: squareSize * 5, y: squareSize * 3 } },
+        { from: { piece: "knight", index:7, x: squareSize * 6, y: 0 }, to: { x: squareSize * 5, y: squareSize * 2 } },
       ]
 
       setMoveSequence(moves)
     }
-  }, [showPieces, squareSize])
+  }, [showPieces, squareSize, customPosition])
 
   // Execute move sequence
   useEffect(() => {
@@ -239,7 +363,7 @@ export default function DynamicChessAnimation() {
             },
           ])
         }
-      }, 2000)
+      }, 1000)
 
       return () => clearTimeout(timer)
     }
@@ -249,6 +373,18 @@ export default function DynamicChessAnimation() {
   const handleMoveComplete = () => {
     // Clear highlights after move
     setTimeout(() => {
+      if (activePiece) {
+        // Store the final position of the moved piece
+        setMovedPieces(prevState => {
+          const newState = new Map(prevState);
+          newState.set(activePiece.index, { 
+            x: activePiece.targetX,
+            y: activePiece.targetY
+          });
+          return newState;
+        });
+      }
+      
       setMoveHighlights([])
       setActivePiece(null)
 
@@ -260,6 +396,7 @@ export default function DynamicChessAnimation() {
           // Reset to beginning after a delay
           setTimeout(() => {
             setCurrentMoveIndex(0)
+            setMovedPieces(new Map()) // Reset moved pieces when restarting sequence
           }, 3000)
           return prev
         }
@@ -268,7 +405,7 @@ export default function DynamicChessAnimation() {
   }
 
   // Create chess board squares
-  const squares = []
+  const squares: SquareState[] = []
   for (let row = 0; row < 8; row++) {
     for (let col = 0; col < 8; col++) {
       const isLight = (row + col) % 2 === 0
@@ -282,7 +419,7 @@ export default function DynamicChessAnimation() {
   }
 
   // Chess pieces setup
-  const pieces = [
+  const pieces: PieceState[] = customPosition ? customPosition.pieces : [
     { id: 1, type: "rook", color: "#1e293b", x: 0, y: 0, scale: 1 },
     { id: 2, type: "knight", color: "#1e293b", x: squareSize, y: 0, scale: 1 },
     { id: 3, type: "bishop", color: "#1e293b", x: squareSize * 2, y: 0, scale: 1 },
@@ -318,7 +455,7 @@ export default function DynamicChessAnimation() {
     { id: 30, type: "pawn", color: "#f8fafc", x: squareSize * 5, y: squareSize * 6, scale: 0.9 },
     { id: 31, type: "pawn", color: "#f8fafc", x: squareSize * 6, y: squareSize * 6, scale: 0.9 },
     { id: 32, type: "pawn", color: "#f8fafc", x: squareSize * 7, y: squareSize * 6, scale: 0.9 },
-  ]
+  ];
 
   return (
     <div className="relative w-[320px] h-[320px] mx-auto">
@@ -355,16 +492,12 @@ export default function DynamicChessAnimation() {
             )
           }
 
-          // Skip rendering pieces that are being moved
-          if (
-            activePiece &&
-            moveSequence.some(
-              (move) =>
-                move.from.index === piece.id &&
-                currentMoveIndex > moveSequence.findIndex((m) => m.from.index === piece.id),
-            )
-          ) {
-            return null
+          // Check if this piece has been moved before
+          const movedPosition = movedPieces.get(piece.id);
+          
+          // Skip rendering only if it's the actively moving piece
+          if (activePiece && activePiece.index === piece.id) {
+            return null;
           }
 
           return (
@@ -372,8 +505,8 @@ export default function DynamicChessAnimation() {
               key={piece.id}
               type={piece.type}
               color={piece.color}
-              x={piece.x}
-              y={piece.y}
+              x={movedPosition ? movedPosition.x : piece.x}
+              y={movedPosition ? movedPosition.y : piece.y}
               scale={piece.scale}
             />
           )
@@ -384,10 +517,10 @@ export default function DynamicChessAnimation() {
         {particles.map((particle) => (
           <Particle 
             key={particle.id} 
-            initialX={particle.initialX || particle.x}
-            initialY={particle.initialY || particle.y}
-            finalX={particle.finalX || particle.x + Math.random() * 20 - 10}
-            finalY={particle.finalY || particle.y + Math.random() * 20 - 10}
+            initialX={particle.initialX || (particle.x || 0)}
+            initialY={particle.initialY || (particle.y || 0)}
+            finalX={particle.finalX || ((particle.x || 0) + Math.random() * 20 - 10)}
+            finalY={particle.finalY || ((particle.y || 0) + Math.random() * 20 - 10)}
             size={particle.size || 4}
             delay={particle.delay || 0}
             duration={particle.duration || 0.2}
