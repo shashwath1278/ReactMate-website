@@ -52,6 +52,7 @@
     "next-themes": "latest",
     "react": "^19",
     "react-chess-pieces": "^1.1.2",
+    "react-chessboard": "^4.7.2",
     "react-chessground": "^1.5.0",
     "react-day-picker": "8.10.1",
     "react-dom": "^19",
